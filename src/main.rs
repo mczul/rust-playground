@@ -1,25 +1,40 @@
-struct MyParameterContainer {
-    x: u8,
-    y: u8,
-}
-
-/**
- * Adds the two numbers.
- */
-fn add_bare(x: u8, y: u8) -> u8 {
-    x + y
-}
-
-fn add_params(params: MyParameterContainer) -> u8 {
-    params.x + params.y
-}
+use std::io;
+use rand::prelude::*;
 
 fn main() {
-    let x = 42;
-    let y = 23;
+    let max_tries = 10;
+    let secret = rand::rng().random_range(1..=100);
+    println!("Guessing game time!");
 
-    let params = MyParameterContainer { x: 42, y: 23 };
+    let mut tries: u8 = 0;
+    let mut user_input = String::new();
 
-    println!("{} + {} = {}", x, y, add_bare(x, y));
-    println!("{} + {} = {}", x, y, add_params(params));
+    while tries < max_tries {
+        // Reset
+        user_input.clear();
+
+        // Input
+        println!("Please input your guess:");
+        io::stdin()
+            .read_line(&mut user_input)
+            .expect("Failed to read line");
+
+        let trimmed_user_input = user_input.trim();
+        println!("You guessed: {trimmed_user_input}");
+
+        // Success
+        if trimmed_user_input == format!("{secret}") {
+            println!("You guessed the secret - nice!");
+            break;
+        }
+
+        // Failure
+        tries += 1;
+        if tries < max_tries {
+            println!("That was your {tries}. guess... try again!");
+            continue;
+        }
+
+        println!("You had your tries... and failed.");
+    }
 }
