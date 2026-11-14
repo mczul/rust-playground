@@ -1,5 +1,5 @@
-use std::io;
 use rand::prelude::*;
+use std::io;
 
 fn main() {
     let max_tries = 10;
