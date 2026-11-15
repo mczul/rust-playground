@@ -50,7 +50,7 @@ fn main() {
         match tries_left.cmp(&1) {
             Ordering::Greater => println!("{tries_left} tries left... try again!"),
             Ordering::Equal => println!("Only one try left... good luck!"),
-            Ordering::Less => exit(1),
+            Ordering::Less => println!("No more try left."),
         }
     }
 }
