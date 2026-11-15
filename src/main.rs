@@ -8,18 +8,18 @@ fn main() {
     println!("Guessing game time!");
 
     let mut tries: u8 = 0;
-    let mut user_input = String::new();
+    let mut guess = String::new();
 
     while tries < max_tries {
         // Reset
-        user_input.clear();
+        guess.clear();
 
         // Input
         println!("Please input your guess:");
         io::stdin()
-            .read_line(&mut user_input)
+            .read_line(&mut guess)
             .expect("Failed to read line");
-        let guess: u8 = user_input.trim().parse().expect("Please type a number!");
+        let guess: u8 = guess.trim().parse().expect("Please type a number between 1 and 100!");
 
         // Value handling
         match guess.cmp(&secret) {
