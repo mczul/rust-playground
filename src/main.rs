@@ -1,11 +1,12 @@
 use rand::prelude::*;
 use std::cmp::Ordering;
 use std::io;
-use std::process::exit;
 
 fn main() {
     let max_tries = 10;
-    let secret = rand::rng().random_range(1..=100);
+    let secret_min: u8 = 1;
+    let secret_max: u8 = 100;
+    let secret = rand::rng().random_range(secret_min..=secret_max);
     println!("Guessing game time!");
 
     let mut tries: u8 = 0;
@@ -20,10 +21,13 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-        let guess: u8 = guess
-            .trim()
-            .parse()
-            .expect("Please type a number between 1 and 100!");
+        let guess: u8 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Please provide a number between 1 and 100!");
+                continue;
+            }
+        };
 
         // Value handling
         match guess.cmp(&secret) {
