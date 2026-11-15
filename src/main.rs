@@ -1,5 +1,5 @@
-use std::cmp::Ordering;
 use rand::prelude::*;
+use std::cmp::Ordering;
 use std::io;
 
 fn main() {
@@ -35,7 +35,7 @@ fn main() {
             }
         }
 
-        //
+        // Remaining tries
         tries += 1;
         if tries < max_tries {
             println!("That was your {tries}. guess... try again!");
