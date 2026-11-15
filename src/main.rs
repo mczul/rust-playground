@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use rand::prelude::*;
 use std::io;
 
@@ -18,17 +19,23 @@ fn main() {
         io::stdin()
             .read_line(&mut user_input)
             .expect("Failed to read line");
+        let guess: u8 = user_input.trim().parse().expect("Please type a number!");
 
-        let trimmed_user_input = user_input.trim();
-        println!("You guessed: {trimmed_user_input}");
-
-        // Success
-        if trimmed_user_input == format!("{secret}") {
-            println!("You guessed the secret - nice!");
-            break;
+        // Value handling
+        match guess.cmp(&secret) {
+            Ordering::Less => {
+                println!("Too low!");
+            }
+            Ordering::Equal => {
+                println!("You guessed the secret - nice!");
+                break;
+            }
+            Ordering::Greater => {
+                println!("Too high!");
+            }
         }
 
-        // Failure
+        //
         tries += 1;
         if tries < max_tries {
             println!("That was your {tries}. guess... try again!");
