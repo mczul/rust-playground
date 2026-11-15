@@ -1,6 +1,7 @@
 use rand::prelude::*;
 use std::cmp::Ordering;
 use std::io;
+use std::process::exit;
 
 fn main() {
     let max_tries = 10;
@@ -10,7 +11,7 @@ fn main() {
     let mut tries: u8 = 0;
     let mut guess = String::new();
 
-    while tries < max_tries {
+    loop {
         // Reset
         guess.clear();
 
@@ -40,11 +41,16 @@ fn main() {
 
         // Remaining tries
         tries += 1;
-        if tries < max_tries {
-            println!("That was your {tries}. guess... try again!");
-            continue;
+        if tries >= max_tries {
+            println!("You tried {tries} times and failed. You loose!");
+            break;
         }
 
-        println!("You had your tries... and failed.");
+        let tries_left = max_tries - tries;
+        match tries_left.cmp(&1) {
+            Ordering::Greater => println!("{tries_left} tries left... try again!"),
+            Ordering::Equal => println!("Only one try left... good luck!"),
+            Ordering::Less => exit(1),
+        }
     }
 }
