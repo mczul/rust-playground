@@ -21,7 +21,7 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-        let guess= match guess.trim().parse::<u8>() {
+        let guess = match guess.trim().parse::<u8>() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please provide a number between 1 and 100!");
